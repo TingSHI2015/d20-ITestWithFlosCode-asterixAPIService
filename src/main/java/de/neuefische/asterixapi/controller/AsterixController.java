@@ -1,11 +1,11 @@
 package de.neuefische.asterixapi.controller;
 
 import de.neuefische.asterixapi.model.AsterixCharacter;
+import de.neuefische.asterixapi.model.AsterixCharacterDto;
 import de.neuefische.asterixapi.repository.AsterixRepo;
+import de.neuefische.asterixapi.service.AsterixService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,9 +14,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AsterixController {
 
-    private final AsterixRepo repo;
+    private final AsterixService service;
     @GetMapping("/characters")
     public List<AsterixCharacter> getAllCharacter(){
-        return repo.findAll();
+        return service.findAllCharacters();
+    }
+
+    @PostMapping
+    public AsterixCharacter saveNewAsterixCharacter(@RequestBody AsterixCharacterDto asterixCharacter){
+        return service.saveNewAsterixCharacter(asterixCharacter);
+    }
+
+    @PutMapping("/{id}")
+    public AsterixCharacter updateAsterixCharacter (@PathVariable String id,
+                                                    @RequestBody AsterixCharacterDto asterixCharacter){
+        return service.updateCharacterById(id, asterixCharacter);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteCharacter(@PathVariable String id){
+        return service.deleteCharById(id);
     }
 }

@@ -1,10 +1,6 @@
 package de.neuefische.asterixapi.model;
 
-import lombok.With;
-
-@With
-public record AsterixCharacter(
-        String id,
+public record AsterixCharacterDto(
         String name,
         int age,
         String profession
